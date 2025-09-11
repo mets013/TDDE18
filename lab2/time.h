@@ -13,5 +13,6 @@ bool is_valid(Time const& t);
 
 std::string to_string(Time const& t, bool hour_format = true);
 // 24 hour format will be default, if they want am they will have to make it false
+// hour_format not const or reference time since it will be changed
 
 #endif //TIME_H
