@@ -8,9 +8,9 @@ int main() {
      // Variables -----------------------------------------
 
      int num{};
-     string str{};
      double real{};
      char alpha{};
+     string str{};
 
      // ---------------------------------------------------
 
@@ -39,7 +39,8 @@ int main() {
 
      cout <<"Enter one integer and one real number: "; 
      // endl or flush not "needed" since cout is flushed 
-     // by cin so output comes out directly
+     // by cin so output comes out directly, 
+     // new line is enough for these cases
      cin  >> num >> real;
      cin.ignore(1000, '\n');                                                 
      // clear buffer after input
@@ -99,7 +100,7 @@ int main() {
      cout << "Enter a text-line: ";
      getline(cin, str); 
      // get line takes everything in the input 
-     // (removes \n unlike cin) so we do not need cin.ignore
+     // (removes/takes with \n unlike cin) so we do not need cin.ignore
      cout << "You entered: \"" << str << "\"\n\n";
 
      // ---------------------------------------------------
@@ -121,5 +122,5 @@ int main() {
 
      // ---------------------------------------------------
 
-     return 0;
+     return 0; // is this needed? program works without it
 }

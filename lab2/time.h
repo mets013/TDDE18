@@ -9,10 +9,11 @@ struct Time {
 };
 
 bool is_valid(Time const& t); 
-// always const initally, ampersand to not copy 
+// always const initally, 
+// ampersand to not copy and make reference (performance)
 
-std::string to_string(Time t, bool format_am_pm = false);
-// 24 hour format will be default, if they want am they will have to make it false
-// hour_format not const or reference time since it will be changed
+std::string to_string(Time const& t, bool format_am_pm = false);
+// 24 hour format will be default (we live in sweden duuuu)
+// if they want am they will have to make it true
 
 #endif //TIME_H

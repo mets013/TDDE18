@@ -9,11 +9,10 @@ int main() {
 
     // Variables ------------------------------------------
 
-    ifstream ifs{"lab1p3.cc"}; // change file
+    ifstream ifs{"lab1p3.cc"}; // change file here
     string word{};
     string longest_word{};
     string shortest_word{};
-
     int counter{0};
     int word_length{};
     double average_length{};
@@ -33,7 +32,7 @@ int main() {
         // 3 letters, then it becomes wrong
         }
 
-        ++counter;
+        ++counter; // counts the words...
         word_length += size(word); //sums the word lengths
 
         if (size(word) > size(longest_word)) { 

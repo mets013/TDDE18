@@ -6,20 +6,24 @@ int main() {
 
     // Variables ------------------------------------------
 
+    // Input variables
     float first_price{},
           last_price{}, 
           stride{}, 
-          tax_percent{},
-          price_with_tax{},
+          tax_percent{};
+    // Table variables 
+    float price_with_tax{},
           tax{},
           price{};
+    // floats instead of doubles because 
+    // lab requirments... otherwise doubles :)
 
     // Input part -----------------------------------------
 
     cout << "INPUT PART\n" 
          << "==========\n";
     
-    do { // add f just to be sure...
+    do { // do while will run this once first before "entering" the loop
         cout << "Enter first price: ";
         cin  >> first_price;
         cin.ignore(1000, '\n');
@@ -27,7 +31,7 @@ int main() {
             cout << "ERROR: First price must be at least 0 (zero) SEK\n";
         }
     }
-    while (first_price < 0.0f);
+    while (first_price < 0.0f); // add f just to be sure...
     
     do {
     // makes sense, we don't want to allow the user to decrease between
@@ -54,7 +58,7 @@ int main() {
 
     do { 
         // note it can't be 100 or 0 since it says "between"
-        // in the instructions easy fix if 0 and 100 is desired
+        // in the instructions, easy fix if 0 and 100 is desired
         cout << "Enter tax percent: ";
         cin  >> tax_percent;
         if (tax_percent >= 100.0f or tax_percent <= 0.0f) {
@@ -63,7 +67,7 @@ int main() {
     }
     while (tax_percent >= 100.0f or tax_percent <= 0.0f);
 
-    tax_percent = tax_percent/100.0f;
+    tax_percent = tax_percent/100.0f; // convert % to 1/100 for quick mathzzz
 
     // Tax table ------------------------------------------
 
@@ -72,14 +76,15 @@ int main() {
          << setw(12) << "Price" 
          << setw(17) << "Tax" 
          << setw(20) << "Price with tax\n"
-         << setw(50) << setfill('-') << '\n';
+         << setw(50) << setfill('-') << '\n'; 
+         // instead of a string with 50 '-'
 
     for (int step = 0; first_price+step*stride <= last_price; ++step) {
         // using int steps instead of just ++stride due to
         // float error rounding
         
         price = first_price+step*stride; 
-        // define price to make it look nicer and match with
+        // use price to make it look nicer/more readable and match with
         // the tables header
         tax = price*tax_percent;
         price_with_tax = price+tax;

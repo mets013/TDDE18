@@ -3,39 +3,49 @@
 
 bool is_valid(Time const& t) { 
     // always use const initally, 
-    // ampersand to not make a copy (performance)
+    // ampersand to not make a copy / make 
+    // reference instead (performance)
     return (t.hours   >= 0 and t.hours   <= 23 and
             t.minutes >= 0 and t.minutes <= 59 and
-            t.seconds >= 0 and t.seconds <= 59);
+            t.seconds >= 0 and t.seconds <= 59); 
+            // someone said on the lecture you could do this! :)
 }
 
-std::string to_string(Time const& t, bool hour_format) {
+std::string to_string(Time const& t, bool format_am_pm) {
 
     std::string time_string{};
-    int pm_hours{};
 
-    if (t.hours > 11 and hour_format == true) {
-        pm_hours = t.hours-12;
-    }
+    if (format_am_pm) { 
+        int pm_hours{}; // only declare it if it is needed
+    
+        pm_hours = t.hours % 12;
+        // converts 24 hour to am-pm by checking what's the 
+        // rest after dividing with 12 (modulus)
+        if (pm_hours == 0) {
+            pm_hours = 12; // since 0 or 24 hours is 12 am
+        }
 
-    if (hour_format == false) {
-        if (t.hours < 10) { // adds 0 to the time for formatting
-            time_string = "0"+std::to_string(t.hours)+":";
+        if (pm_hours < 10) { 
+        // adds zero so that the formatting is correct
+            time_string ="0"+std::to_string(pm_hours)+":";
+            // normal to_string function, found on cpp-references
+            // after googling how to convert int to string :)
+        }
+        else {
+            time_string = std::to_string(pm_hours)+":";
+        }
     }
+    else { // here is 24 hour time
+        if (t.hours <10) {
+             time_string ="0"+std::to_string(t.hours)+":";
+        }
         else {
             time_string = std::to_string(t.hours)+":";
         }
     }
-    else {
-        if (t.hours < 10) { // adds 0 to the time for formatting
-            time_string = "0"+std::to_string(pm_hours)+":";
-        }
-        else {
-            time_string = std::to_string(pm_hours)+":";
-        }  
-    }  
 
-    if (t.minutes < 10) {
+    if (t.minutes < 10) { 
+    // minutes and seconds are the same for 24 hour or am-pm
         time_string += "0"+std::to_string(t.minutes)+":";
     }
     else {
@@ -49,7 +59,9 @@ std::string to_string(Time const& t, bool hour_format) {
         time_string += std::to_string(t.seconds);
     }
 
-    if (hour_format == true) {
+    if (format_am_pm) { 
+    // since the string is concatenated from left to right this can't
+    // be in the "am-pm" if-block above.
         if (t.hours > 11) {
             time_string += " pm";
         }
@@ -58,7 +70,7 @@ std::string to_string(Time const& t, bool hour_format) {
         }
     }
 
-    // very repetitive :(
+    // very repetitive :( maybe create a function for this? ask at lab session
 
 
     return time_string;
