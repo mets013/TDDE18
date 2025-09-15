@@ -16,4 +16,10 @@ std::string to_string(Time const& t, bool format_am_pm = false);
 // 24 hour format will be default (we live in sweden duuuu)
 // if they want am they will have to make it true
 
+bool is_am(Time const& t);
+
+Time operator+(Time const& t, int const& add_seconds);
+
+Time operator+(int const& add_seconds, Time const& t);
+
 #endif //TIME_H

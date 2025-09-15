@@ -7,9 +7,9 @@ int main() {
 
      // Variables -----------------------------------------
 
-     int num{};
+     int    num{};
      double real{};
-     char alpha{};
+     char   alpha{};
      string str{};
 
      // ---------------------------------------------------
@@ -44,7 +44,7 @@ int main() {
      cin  >> num >> real;
      cin.ignore(1000, '\n');                                                 
      // clear buffer after input
-     cout << "The real is: " << setw(11) << fixed << setprecision(3) << real 
+     cout << "The real is: " << setw(11) << fixed << setprecision(3) << real
      // fixed makes so that it always prints 3 decimals, even if we write 10
           << '\n' << "The integer is: " << setw(8) << num << "\n\n";
 

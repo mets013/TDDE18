@@ -70,9 +70,45 @@ std::string to_string(Time const& t, bool format_am_pm) {
         }
     }
 
+    return time_string;
+
+}
     // very repetitive :( maybe create a function for this? ask at lab session
 
+bool is_am(Time const& t) {
+ 
+    return t.hours < 12;
+    // quite simple, if the 24 hour clock is less than 12 it is am (true)
+    // otherwise pm (false)
+        
+}
 
-    return time_string;
+Time operator+(Time const& t, int const& add_seconds) {
+
+    Time new_time{};
+    
+    // if you add something larger that 60 seconds it should 
+    // add onto minutes and hours
+    new_time.seconds = t.seconds + (add_seconds % 60);
+    new_time.minutes = t.minutes + ((add_seconds - new_time.seconds)/60) % 60;
+    new_time.hours   = t.hours   + (((add_seconds - new_time.seconds)/60)
+                                      - new_time.minutes) % 60;
+
+    return new_time;
+
+}
+
+Time operator+(int const& add_seconds, Time const& t) {
+
+    Time new_time{};
+    
+    // if you add something larger that 60 seconds it should 
+    // add onto minutes and hours
+    new_time.seconds = t.seconds + (add_seconds % 60);
+    new_time.minutes = t.minutes + ((add_seconds - new_time.seconds)/60) % 60;
+    new_time.hours   = t.hours   + (((add_seconds - new_time.seconds)/60)
+                                      - new_time.minutes) % 60;
+
+    return new_time;
 
 }

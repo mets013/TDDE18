@@ -27,3 +27,26 @@ TEST_CASE("to_string") {
     CHECK( to_string({ 9,  5,  7}, false) == "09:05:07" ); 
     CHECK( to_string({ 0,  0,  0}, false) == "00:00:00" );   
 }
+
+TEST_CASE("is_am") {
+
+    CHECK( is_am({ 0,  0,  0}) == true );
+    CHECK( is_am({23, 23, 23}) == false );
+    CHECK( is_am({11, 11, 11}) == true );
+    CHECK( is_am({12, 12, 12}) == false );
+
+    CHECK_FALSE( is_am({10, 10, 10}) == false);
+
+}
+
+TEST_CASE("operator+") {
+
+    Time t{};
+
+    // using to_string since == is not defined for Time struct.
+    CHECK( to_string(t + 5, false) == "00:00:05" );
+    CHECK( to_string(5 + t, false) == "00:00:05" );
+    CHECK( to_string(61 + t, false) == "00:01:01" );
+    CHECK( to_string(3700 + t, false) == "01:01:40" );
+
+}
