@@ -69,11 +69,10 @@ std::string to_string(Time const& t, bool format_am_pm) {
             time_string += " am";
         }
     }
-
+    // very repetitive :( maybe create a function for this? ask at lab session
     return time_string;
 
 }
-    // very repetitive :( maybe create a function for this? ask at lab session
 
 bool is_am(Time const& t) {
  
@@ -86,29 +85,32 @@ bool is_am(Time const& t) {
 Time operator+(Time const& t, int const& add_seconds) {
 
     Time new_time{};
+    int total_seconds;
+
+    total_seconds = t.hours * 3600 + 
+                    t.minutes * 60 + 
+                    t.seconds + add_seconds;
+                    // convert the time struct into just
+                    // seconds and then add the added seconds
     
     // if you add something larger that 60 seconds it should 
     // add onto minutes and hours
-    new_time.seconds = t.seconds + (add_seconds % 60);
-    new_time.minutes = t.minutes + ((add_seconds - new_time.seconds)/60) % 60;
-    new_time.hours   = t.hours   + (((add_seconds - new_time.seconds)/60)
-                                      - new_time.minutes) % 60;
+    new_time.hours   = (total_seconds/3600) % 24;
+    // adding mod 24 to make it a "new day"
+    new_time.minutes = (total_seconds/60) % 60;
+    new_time.seconds = (total_seconds) % 60;
+    // "apperently" int trunctates when we do division that
+    // would produce floats, which is nice in this case
+    // since we want whole numbers 5.9999 is 5 minutes and
+    // 59 seconds (and some miliseconds) but never rounded
+    // to 6 minutes.
 
     return new_time;
 
 }
 
 Time operator+(int const& add_seconds, Time const& t) {
-
-    Time new_time{};
-    
-    // if you add something larger that 60 seconds it should 
-    // add onto minutes and hours
-    new_time.seconds = t.seconds + (add_seconds % 60);
-    new_time.minutes = t.minutes + ((add_seconds - new_time.seconds)/60) % 60;
-    new_time.hours   = t.hours   + (((add_seconds - new_time.seconds)/60)
-                                      - new_time.minutes) % 60;
-
-    return new_time;
-
+    return t + add_seconds; 
+    // found this on google, since we want it to be
+    // commutative doing 5+t = t+5 so this works well
 }
