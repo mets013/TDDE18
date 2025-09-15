@@ -48,5 +48,23 @@ TEST_CASE("operator+") {
     CHECK( to_string(5 + t, false) == "00:00:05" );
     CHECK( to_string(61 + t, false) == "00:01:01" );
     CHECK( to_string(3700 + t, false) == "01:01:40" );
+    CHECK( to_string(t + 3700, true) == "01:01:40 am");
+
+    t = {12,12,12};
+
+    CHECK( to_string(t+5, false) == "12:12:17" );
+    CHECK( to_string(3700+t, true) == "01:13:52 pm");
+
+}
+
+TEST_CASE("operator-") {
+
+    Time t{};
+
+    CHECK( to_string(t -5, false) == "23:59:55" );
+
+    t = {12,40,50};
+
+    CHECK( to_string(t-3700, false) == "11:39:10" );
 
 }

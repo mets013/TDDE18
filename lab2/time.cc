@@ -85,7 +85,7 @@ bool is_am(Time const& t) {
 Time operator+(Time const& t, int const& add_seconds) {
 
     Time new_time{};
-    int total_seconds;
+    int total_seconds{};
 
     total_seconds = t.hours * 3600 + 
                     t.minutes * 60 + 
@@ -113,4 +113,55 @@ Time operator+(int const& add_seconds, Time const& t) {
     return t + add_seconds; 
     // found this on google, since we want it to be
     // commutative doing 5+t = t+5 so this works well
+}
+
+Time operator-(Time const& t, int const& remove_seconds) {
+// almost same as for operator+, but we want it to go around
+// an entire day if we remove for example 24*60*60 seconds
+
+    Time new_time{};
+    int total_seconds{};
+
+    total_seconds = ((t.hours * 3600 + 
+                      t.minutes * 60 + 
+                      t.seconds - remove_seconds) 
+                      % 86400 + 86400) % 86400;
+    // mathssss, 864000 seconds in a day, to keep the time
+    // positive we add "one day" and then modulus with one
+    // day again to get the correct time
+
+    new_time.hours   = (total_seconds/3600) % 24;
+    new_time.minutes = (total_seconds/60) % 60;
+    new_time.seconds = (total_seconds) % 60;
+
+    return new_time;
+// something i realized while doing this is that 5 - t is not 
+// something that is needed
+}
+
+Time& operator++(Time& t) {
+// same approach as with the operator+ but 
+// it will always be +1 instead of whatever
+
+    int total_seconds{};
+
+    total_seconds = t.hours * 3600 + 
+                        t.minutes * 60 + 
+                        t.seconds + 1;
+
+    t.hours   = (total_seconds/3600) % 24;
+    t.minutes = (total_seconds/60) % 60;
+    t.seconds = (total_seconds) % 60;
+
+    return t;
+}
+
+Time operator++(Time& t, int) {
+    // from lecture one, a++ is suppose to
+    // increment the value but return the value
+    // before incrementing it
+    Time before_increment{};
+    before_increment = t;
+    ++t;
+    return before_increment;
 }

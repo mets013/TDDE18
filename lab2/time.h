@@ -22,4 +22,10 @@ Time operator+(Time const& t, int const& add_seconds);
 
 Time operator+(int const& add_seconds, Time const& t);
 
+Time operator-(Time const& t, int const& remove_seconds);
+
+Time& operator++(Time& t);
+
+Time operator++(Time& t, int);
+
 #endif //TIME_H
