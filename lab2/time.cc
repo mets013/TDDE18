@@ -135,8 +135,10 @@ Time operator-(Time const& t, int const& remove_seconds) {
     new_time.seconds = (total_seconds) % 60;
 
     return new_time;
-// something i realized while doing this is that 5 - t is not 
-// something that is needed
+    // subtraction is not commutative and it doesn't really
+    // show that  5 - t should be possible, what would
+    // that give? should 5 seconds as an integer 
+    // be the same as 00:00:05? se what lab-assistant says
 }
 
 Time& operator++(Time& t) {
@@ -164,4 +166,30 @@ Time operator++(Time& t, int) {
     before_increment = t;
     ++t;
     return before_increment;
+}
+
+Time& operator--(Time& t) {
+    // same as operator- but just always -1
+    int total_seconds{};
+
+    total_seconds = ((t.hours * 3600 + 
+                      t.minutes * 60 + 
+                      t.seconds - 1) 
+                      % 86400 + 86400) % 86400;
+
+    t.hours   = (total_seconds/3600) % 24;
+    t.minutes = (total_seconds/60) % 60;
+    t.seconds = (total_seconds) % 60;
+
+    return t;  
+
+}
+
+Time operator--(Time& t, int) {
+
+    Time before_decrease{};
+    before_decrease = t;
+    --t;
+    return before_decrease;
+
 }

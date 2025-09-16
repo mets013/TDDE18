@@ -22,10 +22,23 @@ Time operator+(Time const& t, int const& add_seconds);
 
 Time operator+(int const& add_seconds, Time const& t);
 
-Time operator-(Time const& t, int const& remove_seconds);
+Time operator-(Time const& t, int const& remove_seconds);   
 
-Time& operator++(Time& t);
+Time& operator++(Time& t); 
+// having & at Time not inside the () allows us to 
+// reference the function so that doing ++(++t) 
+// works without making a copy
 
 Time operator++(Time& t, int);
+// that is not needed here since doing t++ gives the value
+// before incrementing it and a copy is needed, but
+// t should still be incremented
+
+Time& operator--(Time& t);
+
+Time operator--(Time& t, int);
+
+Time operator>(Time const& t1, Time const& t2);
+
 
 #endif //TIME_H

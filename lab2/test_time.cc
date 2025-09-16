@@ -16,7 +16,7 @@ TEST_CASE("is_valid") {
 
 TEST_CASE("to_string") {
 
-    // am-pm tests, edge cases and stuff
+    // am-pm tests
     CHECK( to_string({ 0,  0,  0}, true)  == "12:00:00 am" );      
     CHECK( to_string({12,  0,  0}, true)  == "12:00:00 pm" );    
     CHECK( to_string({ 9,  5,  7}, true)  == "09:05:07 am" );   
@@ -25,7 +25,9 @@ TEST_CASE("to_string") {
     
     // some 24 hour tests
     CHECK( to_string({ 9,  5,  7}, false) == "09:05:07" ); 
-    CHECK( to_string({ 0,  0,  0}, false) == "00:00:00" );   
+    CHECK( to_string({ 0,  0,  0}, false) == "00:00:00" );
+    CHECK( to_string({23, 59, 59}, false) == "23:59:59" );
+    CHECK( to_string({13, 13, 13})        == "13:13:13" );
 }
 
 TEST_CASE("is_am") {
@@ -44,11 +46,11 @@ TEST_CASE("operator+") {
     Time t{};
 
     // using to_string since == is not defined for Time struct.
-    CHECK( to_string(t + 5, false) == "00:00:05" );
-    CHECK( to_string(5 + t, false) == "00:00:05" );
-    CHECK( to_string(61 + t, false) == "00:01:01" );
-    CHECK( to_string(3700 + t, false) == "01:01:40" );
-    CHECK( to_string(t + 3700, true) == "01:01:40 am");
+    CHECK( to_string(t+5, false) == "00:00:05" );
+    CHECK( to_string(5+t, false) == "00:00:05" );
+    CHECK( to_string(61+t, false) == "00:01:01" );
+    CHECK( to_string(3700+t, false) == "01:01:40" );
+    CHECK( to_string(t+3700, true) == "01:01:40 am");
 
     t = {12,12,12};
 
@@ -61,10 +63,33 @@ TEST_CASE("operator-") {
 
     Time t{};
 
-    CHECK( to_string(t -5, false) == "23:59:55" );
+    CHECK( to_string(t-5, false) == "23:59:55" );
 
     t = {12,40,50};
 
     CHECK( to_string(t-3700, false) == "11:39:10" );
+    CHECK( to_string(t-(60*60*24), false) == "12:40:50" );
+    CHECK( to_string(t-(60*60*24+1), false) == "12:40:49" );
+
+}
+
+TEST_CASE("operator++") {
+
+    Time t{12, 40, 50};
+    CHECK( to_string(t++, false) == "12:40:50" );
+    CHECK( to_string(t,   false) == "12:40:51" );
+    CHECK( to_string(++t, false) == "12:40:52" );
+    CHECK( to_string(t,   false) == "12:40:52" );
+
+}
+
+TEST_CASE("operator--") {
+
+    Time t{12, 40, 50};
+    CHECK( to_string(t--, false) == "12:40:50" );
+    CHECK( to_string(t,   false) == "12:40:49" );
+    CHECK( to_string(--t, false) == "12:40:48" );
+    CHECK( to_string(t,   false) == "12:40:48" );
+
 
 }
