@@ -10,11 +10,14 @@ int main() {
     // Variables ------------------------------------------
 
     ifstream ifs{"lab1p3.cc"}; // change file here
-    string word{};
-    string longest_word{};
-    string shortest_word{};
-    int counter{0};
-    int word_length{};
+    
+    string word{},
+           longest_word{},
+           shortest_word{};
+
+    int    counter{0},
+           word_length{};
+
     double average_length{};
 
 

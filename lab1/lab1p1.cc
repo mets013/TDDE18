@@ -7,9 +7,9 @@ int main() {
 
      // Variables -----------------------------------------
 
-     int num{};
+     int    num{};
      double real{};
-     char alpha{};
+     char   alpha{};
      string str{};
 
      // ---------------------------------------------------
@@ -17,7 +17,7 @@ int main() {
      cout << "Enter one integer: ";
      cin  >> num;
      cin.ignore(1000, '\n');
-     cout << "You entered the number: " << num << "\n\n";
+     cout << "You entered the number: " << num << "\n" << endl;
 
      // ---------------------------------------------------
 
@@ -30,7 +30,7 @@ int main() {
      cin  >> num; // and so on...
      cout << " " << num;
      cin  >> num;
-     cout << " " << num << "\n\n";
+     cout << " " << num << "\n" << endl;
      cin.ignore(1000, '\n'); 
      // clear the buffer, ignore up to 1000 inputs
      // or untill new line
@@ -44,9 +44,9 @@ int main() {
      cin  >> num >> real;
      cin.ignore(1000, '\n');                                                 
      // clear buffer after input
-     cout << "The real is: " << setw(11) << fixed << setprecision(3) << real 
+     cout << "The real is: " << setw(11) << fixed << setprecision(3) << real
      // fixed makes so that it always prints 3 decimals, even if we write 10
-          << '\n' << "The integer is: " << setw(8) << num << "\n\n";
+          << '\n' << "The integer is: " << setw(8) << num << "\n" << endl;
 
      // ---------------------------------------------------
 
@@ -54,14 +54,14 @@ int main() {
      cin  >> real >> num;
      cin.ignore(1000, '\n'); // clear input buffer after input
      cout << setfill('.') << "The real is: " << setw(11) << real << '\n'
-          << "The integer is: " << setw(8) << num << "\n\n";
+          << "The integer is: " << setw(8) << num << "\n" << endl;
 
      // ---------------------------------------------------
 
      cout << "Enter a character: ";
      cin  >> alpha;
      cin.ignore(1000, '\n'); // same as above
-     cout << "You entered: " << alpha << "\n\n";
+     cout << "You entered: " << alpha << "\n" << endl;
 
      // ---------------------------------------------------
 
@@ -69,7 +69,7 @@ int main() {
      cin  >> str;
      cin.ignore(1000, '\n');
      cout << "The word '" << str << "' has " 
-          << size(str) << " character(s).\n\n";
+          << size(str) << " character(s).\n" << endl;
 
      // ---------------------------------------------------
 
@@ -77,7 +77,7 @@ int main() {
      cin  >> num >> str;
      cin.ignore(1000, '\n');
      cout << "You entered '" << num 
-          << "' and '" << str << "'.\n\n";
+          << "' and '" << str << "'.\n" << endl;
 
      // ---------------------------------------------------
 
@@ -85,7 +85,7 @@ int main() {
      cin  >> alpha >> str;
      cin.ignore(1000, '\n');
      cout << "You entered the string \"" << str 
-          << "\" and the character '" << alpha << "'.\n\n";
+          << "\" and the character '" << alpha << "'.\n" << endl;
      
      // ---------------------------------------------------
 
@@ -93,7 +93,7 @@ int main() {
      cin  >> str >> real;
      cin.ignore(1000, '\n');
      cout <<"You entered \"" << str << "\" and \"" 
-          << real << "\".\n\n";
+          << real << "\".\n" << endl;
 
      // ---------------------------------------------------
     
@@ -101,13 +101,13 @@ int main() {
      getline(cin, str); 
      // get line takes everything in the input 
      // (removes/takes with \n unlike cin) so we do not need cin.ignore
-     cout << "You entered: \"" << str << "\"\n\n";
+     cout << "You entered: \"" << str << "\"\n" << endl;
 
      // ---------------------------------------------------
 
      cout << "Enter a second line of text: ";
      getline(cin, str);
-     cout << "You entered: \"" << str << "\"\n\n";
+     cout << "You entered: \"" << str << "\"\n" << endl;
 
      // ---------------------------------------------------
 
@@ -118,7 +118,7 @@ int main() {
      cin  >> str;
      cout << " " << str;
      cin  >> str;
-     cout << " " << str << "'\n";
+     cout << " " << str << endl;
 
      // ---------------------------------------------------
 
