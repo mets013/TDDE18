@@ -102,3 +102,12 @@ TEST_CASE("operator>") {
     CHECK( (t2>t1) == true);
 
 }
+
+TEST_CASE("output") {
+
+    Time t{12, 34, 56};
+
+    CHECK( std::cout << t << std::endl );
+
+
+}

@@ -1,6 +1,7 @@
 #ifndef TIME_H
 #define TIME_H
 #include <string>
+#include <iostream>
 
 struct Time {
     int hours, 
@@ -43,5 +44,6 @@ Time operator--(Time& t, int);
 
 bool operator>(Time const& t1, Time const& t2);
 
+std::ostream& operator<<(std::ostream& os, Time const& t);
 
 #endif //TIME_H

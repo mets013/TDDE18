@@ -1,5 +1,6 @@
 #include "time.h"
 #include <string>
+#include <iostream>
 
 int convert_to_seconds(Time const& t) {
     
@@ -204,5 +205,13 @@ bool operator>(Time const& t1, Time const& t2) {
     // we turn it into seconds and then compare the times
 
     return convert_to_seconds(t1) > convert_to_seconds(t2);
+
+}
+
+std::ostream& operator<<(std::ostream& os, Time const& t) {
+
+    os << t.hours << ":" << t.minutes << ":" << t.seconds;
+
+    return os;
 
 }
