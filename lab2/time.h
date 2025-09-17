@@ -8,6 +8,9 @@ struct Time {
         seconds;
 };
 
+int convert_to_seconds(Time const& t);
+// convert the time into seconds for easier handling
+
 bool is_valid(Time const& t); 
 // always const initally, 
 // ampersand to not copy and make reference (performance)
@@ -38,7 +41,7 @@ Time& operator--(Time& t);
 
 Time operator--(Time& t, int);
 
-Time operator>(Time const& t1, Time const& t2);
+bool operator>(Time const& t1, Time const& t2);
 
 
 #endif //TIME_H

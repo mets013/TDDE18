@@ -1,6 +1,12 @@
 #include "time.h"
 #include <string>
 
+int convert_to_seconds(Time const& t) {
+    
+   return (t.hours * 3600 + t.minutes * 60 + t.seconds);
+
+}
+
 bool is_valid(Time const& t) { 
     // always use const initally, 
     // ampersand to not make a copy / make 
@@ -191,5 +197,12 @@ Time operator--(Time& t, int) {
     before_decrease = t;
     --t;
     return before_decrease;
+
+}
+
+bool operator>(Time const& t1, Time const& t2) {
+    // we turn it into seconds and then compare the times
+
+    return convert_to_seconds(t1) > convert_to_seconds(t2);
 
 }

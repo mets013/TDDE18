@@ -91,5 +91,14 @@ TEST_CASE("operator--") {
     CHECK( to_string(--t, false) == "12:40:48" );
     CHECK( to_string(t,   false) == "12:40:48" );
 
+}
+
+TEST_CASE("operator>") {
+
+    Time t1{00, 00, 01};
+    Time t2{12, 30, 40};
+
+    CHECK( (t1>t2) == false);
+    CHECK( (t2>t1) == true);
 
 }
