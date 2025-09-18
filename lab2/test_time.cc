@@ -17,11 +17,11 @@ TEST_CASE("is_valid") {
 TEST_CASE("to_string") {
 
     // am-pm tests
-    CHECK( to_string({ 0,  0,  0}, true)  == "12:00:00 am" );      
-    CHECK( to_string({12,  0,  0}, true)  == "12:00:00 pm" );    
-    CHECK( to_string({ 9,  5,  7}, true)  == "09:05:07 am" );   
-    CHECK( to_string({23, 59, 59}, true)  == "11:59:59 pm" );
-    CHECK( to_string({15,  7,  9}, true)  == "03:07:09 pm" );
+    CHECK( to_string({ 0,  0,  0}, true)  == "12:00:00[am]" );      
+    CHECK( to_string({12,  0,  0}, true)  == "12:00:00[pm]" );    
+    CHECK( to_string({ 9,  5,  7}, true)  == "09:05:07[am]" );   
+    CHECK( to_string({23, 59, 59}, true)  == "11:59:59[pm]" );
+    CHECK( to_string({15,  7,  9}, true)  == "03:07:09[pm]" );
     
     // some 24 hour tests
     CHECK( to_string({ 9,  5,  7}, false) == "09:05:07" ); 
@@ -50,12 +50,15 @@ TEST_CASE("operator+") {
     CHECK( to_string(5+t, false) == "00:00:05" );
     CHECK( to_string(61+t, false) == "00:01:01" );
     CHECK( to_string(3700+t, false) == "01:01:40" );
-    CHECK( to_string(t+3700, true) == "01:01:40 am");
+    CHECK( to_string(t+3700, true) == "01:01:40[am]");
 
     t = {12,12,12};
 
     CHECK( to_string(t+5, false) == "12:12:17" );
-    CHECK( to_string(3700+t, true) == "01:13:52 pm");
+    CHECK( to_string(3700+t, true) == "01:13:52[pm]");
+
+    t = {23,59,59};
+    CHECK( to_string(t+5, false) == "00:00:04" );
 
 }
 
@@ -71,6 +74,9 @@ TEST_CASE("operator-") {
     CHECK( to_string(t-(60*60*24), false) == "12:40:50" );
     CHECK( to_string(t-(60*60*24+1), false) == "12:40:49" );
 
+    t ={00,00,00};
+    CHECK( to_string(t-10, false) == "23:59:50" );    
+
 }
 
 TEST_CASE("operator++") {
@@ -80,6 +86,8 @@ TEST_CASE("operator++") {
     CHECK( to_string(t,   false) == "12:40:51" );
     CHECK( to_string(++t, false) == "12:40:52" );
     CHECK( to_string(t,   false) == "12:40:52" );
+    t = {23, 59, 59};
+    CHECK( to_string(++t, false) == "00:00:00" );
 
 }
 
@@ -90,24 +98,54 @@ TEST_CASE("operator--") {
     CHECK( to_string(t,   false) == "12:40:49" );
     CHECK( to_string(--t, false) == "12:40:48" );
     CHECK( to_string(t,   false) == "12:40:48" );
+    t = {00,00,00};
+    CHECK( to_string(--t, false) == "23:59:59" );
 
 }
 
-TEST_CASE("operator>") {
+TEST_CASE("comparsion operators") {
 
     Time t1{00, 00, 01};
     Time t2{12, 30, 40};
 
-    CHECK( (t1>t2) == false);
-    CHECK( (t2>t1) == true);
+    CHECK( (t1>t2) == false );
+    CHECK( (t2>t1) == true  );
+
+    CHECK( (t1<t2) == true );
+    CHECK( (t2<t1) == false  );
+
+    CHECK( (t1>=t2) == false );
+    CHECK( (t2<=t1) == false  );
+
+    CHECK( (t1!=t2) == true );
+
+    t1 = {12, 30, 40};
+    CHECK( (t2==t1) == true  );
 
 }
 
 TEST_CASE("output") {
 
+    std::ostringstream oss {};
     Time t{12, 34, 56};
+    oss << t << std::flush;
+    CHECK( oss.str() == "12:34:56" );
 
-    CHECK( std::cout << t << std::endl );
+}
 
+TEST_CASE("input") {
+    std::istringstream iss{"12:34:56"},
+                       fail1{"32:32:32"},
+                       fail2{"12 54:10"};
+    Time t{};
+    iss >> t;
+    CHECK_FALSE( iss.fail());
+    CHECK( to_string(t, false) == "12:34:56" );
+
+    fail1 >> t;
+    CHECK(fail1.fail());
+
+    fail2 >> t;
+    CHECK(fail2.fail());
 
 }

@@ -2,6 +2,8 @@
 #define TIME_H
 #include <string>
 #include <iostream>
+#include <ostream>
+#include <istream>
 
 struct Time {
     int hours, 
@@ -11,6 +13,13 @@ struct Time {
 
 int convert_to_seconds(Time const& t);
 // convert the time into seconds for easier handling
+
+Time convert_to_time(int const& seconds);
+// convert seconds back to time
+
+std::string format_clock_00(int const& t);
+// takes in the time (hour/minute/second)
+// and format its with a  leading 0 if it less than 10
 
 bool is_valid(Time const& t); 
 // always const initally, 
@@ -44,6 +53,18 @@ Time operator--(Time& t, int);
 
 bool operator>(Time const& t1, Time const& t2);
 
+bool operator<(Time const& t1, Time const& t2);
+
+bool operator==(Time const& t1, Time const& t2);
+
+bool operator!=(Time const& t1, Time const& t2);
+
+bool operator<=(Time const& t1, Time const& t2);
+
+bool operator>=(Time const& t1, Time const& t2);
+
 std::ostream& operator<<(std::ostream& os, Time const& t);
+
+std::istream& operator>>(std::istream& is, Time& t);
 
 #endif //TIME_H
