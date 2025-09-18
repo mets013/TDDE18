@@ -136,16 +136,22 @@ TEST_CASE("output") {
 TEST_CASE("input") {
     std::istringstream iss{"12:34:56"},
                        fail1{"32:32:32"},
-                       fail2{"12 54:10"};
+                       fail2{"12 54:10"},
+                       work1{"12:32:42 hello"};
     Time t{};
+    std::string s{};
     iss >> t;
-    CHECK_FALSE( iss.fail());
+    CHECK_FALSE( iss.fail() );
     CHECK( to_string(t, false) == "12:34:56" );
 
     fail1 >> t;
-    CHECK(fail1.fail());
+    CHECK(fail1.fail() );
 
     fail2 >> t;
-    CHECK(fail2.fail());
+    CHECK(fail2.fail() );
+
+    work1 >> t >> s;
+    CHECK_FALSE( iss.fail() );
+    CHECK( to_string(t, false) == "12:32:42" );
 
 }
